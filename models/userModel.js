@@ -14,7 +14,16 @@ const users = [
   },
 ];
 
+const getUsersList = () => {
+  // remember export
+  // SELECT user_id, name, email FROM wop_user
+};
+
 const getUser = (id) => {
+  // SELECT * FROM wop_user WHERE user_id = ?
+  // remember in controller do :
+  // delete user.password;
+  // before sending the user back
   const user = users.filter((usr) => {
     if (usr.id === id) {
       return usr;
@@ -37,4 +46,5 @@ module.exports = {
   getUser,
   getUserLogin,
 };
+
 
