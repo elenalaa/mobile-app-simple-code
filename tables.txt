@@ -5,7 +5,7 @@ CREATE TABLE `wop_cat` (
   `weight` float NOT NULL,
   `owner` int(11) NOT NULL,
   `filename` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFrsAULT CHARSET=utf8;
 
 INSERT INTO `wop_cat` (`cat_id`, `name`, `age`, `weight`, `owner`, `filename`) VALUES
 (1, 'Frank', 6, 5, 1, 'http://placekitten.com/400/300'),
