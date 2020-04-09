@@ -16,6 +16,17 @@ const cat_get = async (req, res) => {
 
 const cat_post = async (req, res) => {
   console.log('cat_post', req.body, req.file);
+
+  let errors = validationResult(req);
+
+  if(!req.file.mimetype.includes('image')){
+    errors = [{msg: 'no picture'}];
+  }
+
+  if (!errors.isEmpty()) {
+    return  res.status(422).json({errors: errors.array()});
+  }
+
   const inCat = {
     name: req.body.name,
     age: req.body.age,
@@ -23,6 +34,8 @@ const cat_post = async (req, res) => {
     owner: req.body.owner,
     filename: req.file.filename,
   };
+
+
   try {
     const cat = await catModel.insertCat(inCat);
     console.log('inserted', cat);
@@ -35,6 +48,13 @@ const cat_post = async (req, res) => {
 
 const cat_put = async (req, res) => {
   console.log('cat_put', req.body);
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return  res.status(422).json({errors: errors.array()});
+  }
+
+
   const upCat = await catModel.updateCat(req.body);
   console.log('cat_put result from db', upCat);
   res.status(204).send();

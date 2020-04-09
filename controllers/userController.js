@@ -1,8 +1,8 @@
 'use strict';
-//const pool = require ('../database/db');
 const userModel = require('../models/userModel');
+const {validationResult} = require('express-validator');
 
-const user = userModel.users;
+const users = userModel.users;
 
 const user_list_get = async (req, res) => {
   const users = await userModel.getAllUsers();
@@ -17,6 +17,11 @@ const user_get = async (req, res) => {
 
 const user_post = async (req, res) => {
   console.log('user_post', req.body);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
   try {
     const user = await userModel.insertUser(req.body);
     console.log('inserted', user);
@@ -36,7 +41,7 @@ const user_put = async (req, res) => {
 
 const user_delete = async (req, res) => {
   console.log('user_put', req.parms);
-  const delUser= await userModel.deleteUser(req.params.id);
+  const delUser = await userModel.deleteUser(req.params.id);
   console.log('user_delete result from db', delUser);
   res.json({ deleted: 'OK' });
 };
