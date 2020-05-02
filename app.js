@@ -37,8 +37,9 @@ app.get('/', (req, res) => {
 });
 
 //app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-https.createServer(options, app).listen(8000);
+https.createServer((req, res) => {
+    res.whiteHead(301, {'Location': 'https://localhost:8000' + req.url});
+    res.end();
+}).listen(port);
+https.createServer(options, app).listen(httpsPort);
 
-app.get('/', (req, res) => {
-    res.send('Hello Secure World!');
-});
